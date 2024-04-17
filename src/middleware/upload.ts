@@ -40,14 +40,8 @@ const upload = multer({
 ]);
 
 const uploadMiddleware = (fieldname: string) => {
-   console.log(fieldname, "fieldname");
-
    return (req: Request, res: Response, next: NextFunction) => {
-      console.log("before upload", req.files);
-
       upload(req, res, (err) => {
-         console.log("after upload", err);
-
          if (err instanceof multer.MulterError) {
             if (err.code === "LIMIT_FILE_SIZE") {
                return res.status(400).json({
