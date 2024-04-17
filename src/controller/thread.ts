@@ -62,3 +62,23 @@ export const createThread = async (req: Request, res: Response) => {
       });
    }
 };
+
+export const getReplies = async (req: Request, res: Response) => {
+   try {
+      const { id } = req.params;
+      const replies = await threadServices.getReplies(+id);
+
+      res.json({
+         status: true,
+         message: "success",
+         data: replies,
+      });
+   } catch (error) {
+      const err = error as unknown as Error;
+      console.log(err);
+      res.status(500).json({
+         status: false,
+         message: err.message,
+      });
+   }
+};

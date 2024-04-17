@@ -25,4 +25,5 @@ export interface IThread {
    id?: number;
    content?: string;
    userId: number;
+   threadId?: number;
 }

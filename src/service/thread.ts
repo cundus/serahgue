@@ -12,6 +12,11 @@ export const getThreads = async () => {
                image: true,
             },
          },
+         _count: {
+            select: {
+               replies: true,
+            },
+         },
       },
    });
 };
@@ -39,6 +44,7 @@ export const createThread = async (
    const thread = await db.thread.create({
       data: {
          ...payload,
+         threadId: payload.threadId ? +payload.threadId : null,
       },
    });
 
@@ -82,4 +88,24 @@ export const deleteThread = async (idThread: number, userId: number) => {
    });
 
    return true;
+};
+
+export const getReplies = async (threadId: number) => {
+   return await db.thread.findMany({
+      where: {
+         threadId,
+      },
+      include: {
+         image: {
+            select: {
+               image: true,
+            },
+         },
+         _count: {
+            select: {
+               replies: true,
+            },
+         },
+      },
+   });
 };
