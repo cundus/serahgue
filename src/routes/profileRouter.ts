@@ -10,7 +10,7 @@ profileRouter.patch(
    uploadMiddleware("cover"),
    updateProfile
 );
-
 profileRouter.get("/profile", authentication, getProfile);
+profileRouter.get("/profile/:id", authentication, getProfile);
 
 export default profileRouter;
