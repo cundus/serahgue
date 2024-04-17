@@ -13,3 +13,10 @@ export enum EStatus {
    SUCCESS = "SUCCESS",
    FAILED = "FAILED",
 }
+
+export interface IProfile {
+   bio?: string;
+   avatar?: string;
+   cover?: string;
+   userId?: number;
+}

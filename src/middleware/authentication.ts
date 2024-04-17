@@ -23,9 +23,11 @@ const authentication = (req: Request, res: Response, next: NextFunction) => {
          });
       }
 
+      console.log(decoded);
+
       res.locals.user = (decoded as AuthMiddlewareData).id;
 
-      next();
+      return next();
    } catch (error) {
       const err = error as unknown as Error;
       console.log(err);

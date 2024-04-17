@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import db from "./src/db";
 import { follow, getFollowers } from "./src/controller/follow";
 import router from "./src/routes";
+import path from "path";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 app.use(router);
 
 app.get("/", async (req, res) => {
