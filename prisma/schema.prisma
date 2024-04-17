@@ -50,15 +50,15 @@ model Profile {
 }
 
 model Thread {
-  id       Int      @id @default(autoincrement())
+  id       Int           @id @default(autoincrement())
   content  String?
-  image    String?
   userId   Int
-  author   User     @relation(fields: [userId], references: [id])
-  like     Like[]   @relation("thread")
+  author   User          @relation(fields: [userId], references: [id])
+  like     Like[]        @relation("thread")
   threadId Int?
-  parent   Thread?  @relation("threadReplies", fields: [threadId], references: [id])
-  replies  Thread[] @relation("threadReplies")
+  parent   Thread?       @relation("threadReplies", fields: [threadId], references: [id])
+  replies  Thread[]      @relation("threadReplies")
+  image    ThreadImage[]
 }
 
 model Like {
@@ -68,4 +68,11 @@ model Like {
   user     User   @relation("user", fields: [userId], references: [id])
 
   @@id([threadId, userId])
+}
+
+model ThreadImage {
+  id       Int    @id @default(autoincrement())
+  image    String
+  threadId Int
+  thread   Thread @relation(fields: [threadId], references: [id])
 }
