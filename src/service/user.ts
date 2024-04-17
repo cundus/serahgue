@@ -43,11 +43,19 @@ export const register = async (payload: IRegister) => {
 
    value.password = hashedPassword;
 
-   return await db.user.create({
+   const user = await db.user.create({
       data: {
          ...value,
       },
    });
+
+   const profile = await db.profile.create({
+      data: {
+         userId: user.id,
+      },
+   });
+
+   return { user, profile };
 };
 
 export const login = async (

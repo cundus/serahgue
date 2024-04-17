@@ -10,7 +10,6 @@ export const register = async (req: Request, res: Response) => {
       res.json({
          status: true,
          message: "success",
-         data: result,
       });
    } catch (error) {
       const err = error as unknown as Error;
