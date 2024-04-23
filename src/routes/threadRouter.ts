@@ -15,8 +15,8 @@ threadRouter.post(
    uploadMiddleware("image"),
    createThread
 );
-threadRouter.get("/threads", authentication, getThreads);
-threadRouter.get("/thread/:id", authentication, getThread);
+threadRouter.get("/threads", getThreads);
+threadRouter.get("/thread/:id", getThread);
 threadRouter.get("/replies/:id", authentication, getReplies);
 
 export default threadRouter;

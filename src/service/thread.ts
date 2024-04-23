@@ -3,6 +3,9 @@ import { IThread } from "../type/app";
 
 export const getThreads = async () => {
    return await db.thread.findMany({
+      orderBy: {
+         id: "desc",
+      },
       where: {
          threadId: null,
       },
@@ -12,9 +15,22 @@ export const getThreads = async () => {
                image: true,
             },
          },
+         author: {
+            select: {
+               id: true,
+               username: true,
+               fullname: true,
+               profile: {
+                  select: {
+                     avatar: true,
+                  },
+               },
+            },
+         },
          _count: {
             select: {
                replies: true,
+               like: true,
             },
          },
       },
@@ -27,10 +43,23 @@ export const getThread = async (id: number) => {
          id,
          threadId: null,
       },
+
       include: {
          image: {
             select: {
                image: true,
+            },
+         },
+         author: {
+            select: {
+               id: true,
+               username: true,
+               fullname: true,
+               profile: {
+                  select: {
+                     avatar: true,
+                  },
+               },
             },
          },
       },
@@ -99,6 +128,15 @@ export const getReplies = async (threadId: number) => {
          image: {
             select: {
                image: true,
+            },
+         },
+         author: {
+            include: {
+               profile: {
+                  select: {
+                     avatar: true,
+                  },
+               },
             },
          },
          _count: {

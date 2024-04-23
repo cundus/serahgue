@@ -4,6 +4,7 @@ import db from "./src/db";
 import { follow, getFollowers } from "./src/controller/follow";
 import router from "./src/routes";
 import path from "path";
+import cors from "cors";
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -11,6 +12,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 app.use(router);
 
