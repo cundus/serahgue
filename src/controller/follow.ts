@@ -102,3 +102,32 @@ export const getFollowings = async (req: Request, res: Response) => {
       });
    }
 };
+
+export const checkFollowStatus = async (req: Request, res: Response) => {
+   try {
+      const loggedInId = res.locals.user;
+      const { id_user } = req.params;
+
+      const isFollowings = await prisma.follow.findFirst({
+         where: {
+            followerId: loggedInId,
+            followingId: +id_user,
+         },
+      });
+      console.log(isFollowings);
+
+      res.json({
+         success: true,
+         message: "success",
+         data: isFollowings ? true : false,
+      });
+   } catch (error) {
+      const err = error as Error;
+      console.log(err);
+
+      res.status(500).json({
+         success: false,
+         error: err.message,
+      });
+   }
+};

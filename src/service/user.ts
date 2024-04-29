@@ -4,8 +4,32 @@ import { IRegister } from "../type/app";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-export const getUsers = async () => {
-   return await db.user.findMany();
+export const getUsers = async (
+   condition: { username: string },
+   loggedInId: number
+) => {
+   return await db.user.findMany({
+      where: {
+         username: {
+            contains: condition.username,
+         },
+         NOT: {
+            id: loggedInId,
+         },
+      },
+      select: {
+         id: true,
+         username: true,
+         fullname: true,
+         profile: {
+            select: {
+               avatar: true,
+               bio: true,
+               cover: true,
+            },
+         },
+      },
+   });
 };
 
 export const getUser = async (id: number) => {
