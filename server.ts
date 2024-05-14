@@ -16,20 +16,6 @@ app.use(cors());
 app.use("/uploads", express.static(path.join(__dirname, "src/uploads")));
 app.use(router);
 
-app.get("/", async (req, res) => {
-   const listUser = await db.user.findMany();
-   const singleUser = await db.user.findFirst({
-      where: {
-         id: 1,
-      },
-   });
-
-   res.send({
-      listUser,
-      singleUser,
-   });
-});
-
 app.post("/follow", follow);
 app.get("/followers", getFollowers);
 

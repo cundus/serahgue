@@ -14,6 +14,11 @@ export const register = async (req: Request, res: Response) => {
    } catch (error) {
       const err = error as unknown as Error;
       console.log(err);
+      if (err.message == "USER_IS_EXIST") {
+         return res.status(400).json({
+            message: "Udah kepake",
+         });
+      }
 
       res.status(500).json({
          status: false,

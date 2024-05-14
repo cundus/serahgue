@@ -60,7 +60,7 @@ export const register = async (payload: IRegister) => {
    });
 
    if (isExist) {
-      throw new Error("Username or email already exist");
+      throw new Error("USER_IS_EXIST");
    }
 
    const hashedPassword = await bcrypt.hash(value.password, 10);

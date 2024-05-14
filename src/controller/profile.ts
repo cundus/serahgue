@@ -7,8 +7,8 @@ export const updateProfile = async (req: Request, res: Response) => {
       const userId = res.locals.user;
       const { body } = req;
       const files = req.files as { [fieldname: string]: Express.Multer.File[] };
-      const cover = files.cover[0].filename;
-      const avatar = files.avatar[0].filename;
+      const cover = files?.cover[0]?.filename;
+      const avatar = files?.avatar[0]?.filename;
 
       if (cover) {
          body.cover = cover;

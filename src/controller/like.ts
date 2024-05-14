@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as likeServices from "../service/like";
+import prisma from "../db";
 
 export const getLikes = async (req: Request, res: Response) => {
    try {
@@ -53,13 +54,15 @@ export const getCurrentLike = async (req: Request, res: Response) => {
       const { threadId } = req.params;
       const userId = res.locals.user;
       const like = await likeServices.getCurrentLike(+threadId, +userId);
+      const totalLike = await prisma.like.count({
+         where: {
+            threadId: +threadId,
+         },
+      });
 
       res.json({
-         status: true,
-         message: "success",
-         data: {
-            like,
-         },
+         like,
+         totalLike,
       });
    } catch (error) {
       const err = error as unknown as Error;
